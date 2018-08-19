@@ -32,12 +32,16 @@ public class Home extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		checksession a=new checksession();
 		a.check(request,response);
+
 		createnewConversationform(request,response);
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
 		out.println("<br>");
+		out.println(" <form action=\"Logout\" method=\"get\"> \n" + 
+				"<input type=\"submit\" value = \"Logout\"> \n" + 
+				"       </form> ");
 		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
+	    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");)
 		{
 			try(PreparedStatement p=conn.prepareStatement("with threadid(thread_id,name) as (" + 
 					"select thread_id,name " + 

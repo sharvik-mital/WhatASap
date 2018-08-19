@@ -59,7 +59,7 @@ public class Login extends HttpServlet {
 	      
 		try (
 			    Connection conn = DriverManager.getConnection(
-			    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");
+			    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");
 			)
 			{
 			PrintWriter out = response.getWriter();

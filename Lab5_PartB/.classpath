@@ -17,5 +17,9 @@
 	<classpathentry kind="lib" path="/home/sharvik/tomcat/lib/el-api.jar"/>
 	<classpathentry kind="lib" path="/home/sharvik/tomcat/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="/home/sharvik/tomcat/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/home/rohit/mywebbase/el-api.jar"/>
+	<classpathentry kind="lib" path="/home/rohit/mywebbase/jsp-api.jar"/>
+	<classpathentry kind="lib" path="/home/rohit/mywebbase/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/home/rohit/Downloads/postgresql-42.2.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

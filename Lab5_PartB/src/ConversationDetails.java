@@ -35,27 +35,34 @@ public class ConversationDetails extends HttpServlet {
 		response.setContentType("text/html");
 		checksession a=new checksession();
 		a.check(request,response);
-		String thread_id=(String)request.getParameter("thread_id");
+		String thread=(String)request.getParameter("thread_id");
+		int thread_id=Integer.parseInt(thread);
 		PrintWriter out=response.getWriter();
-		out.println(thread_id);
+//		out.println(thread_id);
+//		out.println(thread_id);
+//			out.println("a");
 		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
-		{try(PreparedStatement p=conn.prepareStatement("select name,text\n" + 
-				"from users natural join posts\n" + 
-				"where thread_id=?\n" + 
-				"order by timestamp;");){
-			p.setString(1,thread_id);
+	    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");)
+		{try(PreparedStatement p=conn.prepareStatement("select name, text from users"
+				+ " natural join posts "
+				+ "where thread_id=? "
+				+ "order by timestamp")){
+			p.setInt(1,thread_id);
 			ResultSet rst=p.executeQuery();
-//			out.println("<form action=\"NewMessage\" method=\"POST\">"+
-//	                 "<input type=\"text\" name = \"text\">"+
-//	                 "<input type=\"hidden\" name = \"thread_id\" value="+thread_id+">"+	
-//	                 "<input type=\"submit\" value = \"Submit\">" +
-//	             "</form>");
-			while (rst.next())
-			{
-				out.println(rst.getString(2));
-			}
-//			toHTML(rst,response);			
+//			while (rst.next())
+//			{
+//				out.println(rst.getString(2));
+//			}
+			toHTML(rst,response);		
+			out.println("<form action=\"NewMessage\" method=\"POST\">"+
+            "<input type=\"text\" name = \"text\">"+
+            "<input type=\"hidden\" name = \"thread_id\" value="+thread_id+">"+	
+            "<input type=\"submit\" value = \"Submit\">" +
+		    "</form>");	
+
+			out.println(" <form action=\"Home\" method=\"get\"> \n" + 
+					"<input type=\"submit\" value = \"Home\"> \n" + 
+					"       </form> ");
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block

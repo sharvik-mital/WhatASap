@@ -46,7 +46,7 @@ public class createConversation extends HttpServlet {
 		}
 		else {
 			try(Connection conn = DriverManager.getConnection(
-		    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
+		    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");)
 			{
 				try(PreparedStatement p=conn.prepareStatement("select * from users where uid=?");){
 					p.setString(1,RequestID);
