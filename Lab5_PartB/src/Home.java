@@ -9,13 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Properties;
 /**
  * Servlet implementation class Home
  */
 @WebServlet("/Home")
 public class Home extends HttpServlet {
+	config cfg=new config();
 	private static final long serialVersionUID = 1L;
-       
+	private final String url = cfg.getProperty("url");
+	private final String user = cfg.getProperty("user");
+	private final String passwd = cfg.getProperty("passwd");
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,8 +42,7 @@ public class Home extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
 		out.println("<br>");
-		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
+		try(Connection conn = DriverManager.getConnection(url,user,passwd);)
 		{
 			try(PreparedStatement p=conn.prepareStatement("with threadid(thread_id,name) as (" + 
 					"select thread_id,name " + 

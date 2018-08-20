@@ -12,8 +12,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/createConversation")
 public class createConversation extends HttpServlet {
+
+	config cfg=new config();
 	private static final long serialVersionUID = 1L;
-       
+	private final String url = cfg.getProperty("url");
+	private final String user = cfg.getProperty("user");
+	private final String passwd = cfg.getProperty("passwd");       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -46,8 +50,7 @@ public class createConversation extends HttpServlet {
 			response.sendRedirect("Home");
 		}
 		else {
-			try(Connection conn = DriverManager.getConnection(
-		    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
+			try(Connection conn = DriverManager.getConnection(url,user,passwd);)
 			{
 				try(PreparedStatement p=conn.prepareStatement("select * from users where uid=?");){
 					p.setString(1,RequestID);

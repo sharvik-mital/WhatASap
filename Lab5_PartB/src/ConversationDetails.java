@@ -16,8 +16,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/ConversationDetails")
 public class ConversationDetails extends HttpServlet {
+
+	config cfg=new config();
 	private static final long serialVersionUID = 1L;
-       
+	private final String url = cfg.getProperty("url");
+	private final String user = cfg.getProperty("user");
+	private final String passwd = cfg.getProperty("passwd");   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -45,8 +49,7 @@ public class ConversationDetails extends HttpServlet {
 		}
 		
 		PrintWriter out=response.getWriter();
-		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
+		try(Connection conn = DriverManager.getConnection(url,user,passwd);)
 		{try(PreparedStatement p=conn.prepareStatement("select name, text from users"
 				+ " natural join posts "
 				+ "where thread_id=? "

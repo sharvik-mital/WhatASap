@@ -14,8 +14,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/NewMessage")
 public class NewMessage extends HttpServlet {
+
+	config cfg=new config();
 	private static final long serialVersionUID = 1L;
-       
+	private final String url = cfg.getProperty("url");
+	private final String user = cfg.getProperty("user");
+	private final String passwd = cfg.getProperty("passwd");    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -61,8 +65,7 @@ public class NewMessage extends HttpServlet {
 			response.sendRedirect("ConversationDetails?thread_id="+thread);
 		}
 		else if(return_val==1) {
-		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
+		try(Connection conn = DriverManager.getConnection(url,user,passwd);)
 		{try(PreparedStatement p=conn.prepareStatement("insert into posts(thread_id,uid, timestamp,text)"
 				+ " values (?,?,now(),?)")){
 			p.setInt(1,thread_id);

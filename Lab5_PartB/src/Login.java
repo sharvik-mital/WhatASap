@@ -14,8 +14,12 @@ import java.io.PrintWriter;
  */
 @WebServlet("/Login")
 public class Login extends HttpServlet {
+
+	config cfg=new config();
 	private static final long serialVersionUID = 1L;
-       
+	private final String url = cfg.getProperty("url");
+	private final String user = cfg.getProperty("user");
+	private final String passwd = cfg.getProperty("passwd");   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -58,8 +62,7 @@ public class Login extends HttpServlet {
 		}
 	      
 		try (
-			    Connection conn = DriverManager.getConnection(
-			    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");
+			    Connection conn = DriverManager.getConnection(url,user,passw);
 			)
 			{
 			PrintWriter out = response.getWriter();

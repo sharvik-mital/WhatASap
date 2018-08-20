@@ -8,6 +8,11 @@ import javax.servlet.http.HttpSession;
 
 public class checksession {
 
+	config cfg=new config();
+//	private static final long serialVersionUID = 1L;
+	private final String url = cfg.getProperty("url");
+	private final String user = cfg.getProperty("user");
+	private final String passwd = cfg.getProperty("passwd");
 	public checksession() {
         super();
         // TODO Auto-generated constructor stub
@@ -27,8 +32,7 @@ public int check(HttpServletRequest request,HttpServletResponse response, int th
 		
 		HttpSession session= request.getSession(false);
 		String ID=(String) session.getAttribute("id");
-		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
+		try(Connection conn = DriverManager.getConnection(url,user,passwd);)
 		{
 		try(PreparedStatement p=conn.prepareStatement("select uid1, uid2 from conversations "
 				+ "where thread_id=? ");){
