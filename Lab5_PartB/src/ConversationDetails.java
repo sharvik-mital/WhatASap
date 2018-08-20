@@ -33,7 +33,8 @@ public class ConversationDetails extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		checksession a=new checksession();
-		a.check(request,response);
+		int sess=a.check(request,response);
+		if(sess==1) {
 		String thread=(String)request.getParameter("thread_id");
 		int thread_id=Integer.parseInt(thread);
 		try {
@@ -72,7 +73,7 @@ public class ConversationDetails extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		}	
 	}
 
 	/**
@@ -119,4 +120,5 @@ public class ConversationDetails extends HttpServlet {
 			throw ex;
 		}
 	}
+	
 }
