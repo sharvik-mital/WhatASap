@@ -1,5 +1,4 @@
 
-i
 import java.sql.*;
 import java.io.IOException;
 import java.io.*;
@@ -32,7 +31,8 @@ public class Home extends HttpServlet {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		checksession a=new checksession();
-		a.check(request,response);
+		int sess=a.check(request,response);
+		if(sess==1) {
 		createnewConversationform(request,response);
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
@@ -95,6 +95,7 @@ public class Home extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 	}
 	
