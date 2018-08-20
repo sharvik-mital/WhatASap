@@ -38,7 +38,8 @@ public class createConversation extends HttpServlet {
 //		doGet(request, response);
 		response.setContentType("text/html");
 		checksession a=new checksession();
-		a.check(request,response);
+		int sess=a.check(request,response);
+		if(sess==1) {
 		String RequestID = request.getParameter("id");
 		PrintWriter out=response.getWriter();
 		if(RequestID.equals("")) {
@@ -46,7 +47,7 @@ public class createConversation extends HttpServlet {
 		}
 		else {
 			try(Connection conn = DriverManager.getConnection(
-		    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");)
+		    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
 			{
 				try(PreparedStatement p=conn.prepareStatement("select * from users where uid=?");){
 					p.setString(1,RequestID);
@@ -105,5 +106,5 @@ public class createConversation extends HttpServlet {
 			}
 		}
 	}
-
+	}
 }
