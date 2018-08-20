@@ -1,4 +1,3 @@
-
 import java.sql.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,20 +40,26 @@ public class NewMessage extends HttpServlet {
 //		doGet(request, response);
 		checksession a=new checksession();
 		a.check(request,response);
-		HttpSession session=request.getSession(true);
+		HttpSession session=request.getSession(false);
 		String ID = (String) session.getAttribute("id");
 
 		String thread=(String)request.getParameter("thread_id");
 		int thread_id=Integer.parseInt(thread);
-		
+		int return_val=1;
+		try {
+			return_val=a.check(request, response,thread_id);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String text=(String) request.getParameter("text");
 		PrintWriter out=response.getWriter();
 		out.println(ID);
-		if(text.isEmpty()) {
+		if(text.isEmpty()&& return_val==1) {
 //			out.println("Empty String!");
 			response.sendRedirect("ConversationDetails?thread_id="+thread);
 		}
-		else {
+		else if(return_val==1) {
 		try(Connection conn = DriverManager.getConnection(
 	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
 		{try(PreparedStatement p=conn.prepareStatement("insert into posts(thread_id,uid, timestamp,text)"
