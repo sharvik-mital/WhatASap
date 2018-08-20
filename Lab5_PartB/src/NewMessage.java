@@ -50,15 +50,20 @@ public class NewMessage extends HttpServlet {
 		String text=(String) request.getParameter("text");
 		PrintWriter out=response.getWriter();
 		out.println(ID);
+		if(text.isEmpty()) {
+//			out.println("Empty String!");
+			response.sendRedirect("ConversationDetails?thread_id="+thread);
+		}
+		else {
 		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");)
+	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
 		{try(PreparedStatement p=conn.prepareStatement("insert into posts(thread_id,uid, timestamp,text)"
 				+ " values (?,?,now(),?)")){
 			p.setInt(1,thread_id);
 			p.setString(2, ID);
 			p.setString(3, text);
 //			ResultSet rst=
-					p.executeUpdate();
+			p.executeUpdate();
 			// out.println(text);
 //			while (rst.next())
 //			{
@@ -72,14 +77,17 @@ public class NewMessage extends HttpServlet {
 //		    "</form>");	
 			response.sendRedirect("ConversationDetails?thread_id="+thread);
 		}
+		
 		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 	}
 
