@@ -39,13 +39,14 @@ public class NewMessage extends HttpServlet {
 		// TODO Auto-generated method stub
 //		doGet(request, response);
 		checksession a=new checksession();
-		a.check(request,response);
+		int sess=a.check(request,response);
+		if(sess==1) {
 		HttpSession session=request.getSession(false);
 		String ID = (String) session.getAttribute("id");
 
 		String thread=(String)request.getParameter("thread_id");
 		int thread_id=Integer.parseInt(thread);
-		int return_val=1;
+		int return_val=0;
 		try {
 			return_val=a.check(request, response,thread_id);
 		} catch (SQLException e1) {
@@ -95,5 +96,5 @@ public class NewMessage extends HttpServlet {
 		}
 		}
 	}
-
+	}
 }
