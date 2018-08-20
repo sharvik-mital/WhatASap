@@ -31,28 +31,27 @@ public class ConversationDetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.setContentType("text/html");
 		checksession a=new checksession();
 		a.check(request,response);
 		String thread=(String)request.getParameter("thread_id");
 		int thread_id=Integer.parseInt(thread);
+		try {
+			a.check(request,response,thread_id);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		PrintWriter out=response.getWriter();
-//		out.println(thread_id);
-//		out.println(thread_id);
-//			out.println("a");
 		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");)
+	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
 		{try(PreparedStatement p=conn.prepareStatement("select name, text from users"
 				+ " natural join posts "
 				+ "where thread_id=? "
 				+ "order by timestamp")){
 			p.setInt(1,thread_id);
 			ResultSet rst=p.executeQuery();
-//			while (rst.next())
-//			{
-//				out.println(rst.getString(2));
-//			}
 			toHTML(rst,response);		
 			out.println("<form action=\"NewMessage\" method=\"POST\">"+
             "<input type=\"text\" name = \"text\">"+
