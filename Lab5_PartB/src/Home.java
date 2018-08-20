@@ -1,4 +1,5 @@
 
+i
 import java.sql.*;
 import java.io.IOException;
 import java.io.*;
@@ -32,16 +33,12 @@ public class Home extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		checksession a=new checksession();
 		a.check(request,response);
-
 		createnewConversationform(request,response);
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
 		out.println("<br>");
-		out.println(" <form action=\"Logout\" method=\"get\"> \n" + 
-				"<input type=\"submit\" value = \"Logout\"> \n" + 
-				"       </form> ");
 		try(Connection conn = DriverManager.getConnection(
-	    		"jdbc:postgresql://localhost:5030/postgres", "rohit", "");)
+	    		"jdbc:postgresql://localhost:5590/WhatASap", "sharvik", "");)
 		{
 			try(PreparedStatement p=conn.prepareStatement("with threadid(thread_id,name) as (" + 
 					"select thread_id,name " + 
@@ -61,7 +58,7 @@ public class Home extends HttpServlet {
 					")\n" + 
 					"select threadid.name,text,timestamp,thread_id as Conversation_Link\n" + 
 					"from lastmessage1 natural join threadid \n" + 
-					"order by timestamp;");
+					"order by timestamp desc;");
 					PreparedStatement p1=conn.prepareStatement("with threadid(thread_id,name) as (\n" + 
 							"select thread_id,name\n" + 
 							"from conversations as c join users on users.uid=c.uid2 \n" + 
@@ -87,6 +84,10 @@ public class Home extends HttpServlet {
 				ResultSet rst=p.executeQuery();
 				ResultSet rst1=p1.executeQuery();
 				toHTML(rst,response,rst1);
+				out.println("<form action=\"Logout\" method=\"GET\">"+
+		                "<input type=\"submit\" value = \"Logout\">" +
+		            "</form>");
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
