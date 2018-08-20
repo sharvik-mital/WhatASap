@@ -12,12 +12,14 @@ public class checksession {
         super();
         // TODO Auto-generated constructor stub
     }
-	public void check(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
+	public int check(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
 		
 		HttpSession session= request.getSession(false);
 		if(session==null) {
 			response.sendRedirect("Login");
+			return 0;
 		}
+		return 1;
 		// TODO Auto-generated method stub
 		
 	}
